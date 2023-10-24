@@ -65,8 +65,15 @@ func (x *BitBuffer) Bytes() []byte {
 // ToBinaryString 把当前的缓存空间转换为二进制字符串
 func (x *BitBuffer) ToBinaryString() string {
 	buff := strings.Builder{}
-	for _, b := range x.buffer {
+loop:
+	for index, b := range x.buffer {
 		for offset := BitBeginOffset; offset >= 0; offset-- {
+
+			// 没有写内容的部分就不转换到字符串中了
+			if index == x.nextWriteIndex && offset <= x.nextWriteBitOffset {
+				break loop
+			}
+
 			if ((b >> offset) & 0x1) == 1 {
 				buff.WriteRune('1')
 			} else {
