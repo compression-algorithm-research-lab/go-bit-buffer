@@ -34,17 +34,17 @@ func (x *BitBuffer) SetBytes(bytes []byte) *BitBuffer {
 	return x
 }
 
-// SeekFirst 移动操作指针
-func (x *BitBuffer) SeekFirst() *BitBuffer {
+// SeekHead 移动操作指针到头部
+func (x *BitBuffer) SeekHead() *BitBuffer {
 	return x.Seek(0)
 }
 
-// SeekLast 移动指针到最后一个位置
-func (x *BitBuffer) SeekLast() *BitBuffer {
+// SeekTail 移动指针到尾部
+func (x *BitBuffer) SeekTail() *BitBuffer {
 	return x.Seek(len(x.bytes) * 8)
 }
 
-// Seek 移动指针
+// Seek 移动指针到指定的position
 func (x *BitBuffer) Seek(offset int) *BitBuffer {
 
 	// 保证空间是足够的
@@ -114,8 +114,8 @@ func (x *BitBuffer) ReadBit() int {
 	return int(value)
 }
 
-// IsAtLast 是否已经存在最后一个位置了
-func (x *BitBuffer) IsAtLast() bool {
+// IsTail 是否已经存在尾部了
+func (x *BitBuffer) IsTail() bool {
 	return x.GetSeek() == x.Capacity()
 }
 

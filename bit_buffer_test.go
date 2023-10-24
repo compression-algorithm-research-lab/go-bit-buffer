@@ -61,47 +61,47 @@ func TestBitBuffer_Seek(t *testing.T) {
 	assert.Equal(t, "111111110", buffer.Seek(9).ToBinaryString())
 	assert.Equal(t, "111111110000000", buffer.Seek(15).ToBinaryString())
 	assert.Equal(t, "1111111100000000", buffer.Seek(16).ToBinaryString())
-	assert.Equal(t, "101111110000000000000000", buffer.Seek(1).WriteBit(0).SeekLast().ToBinaryString())
+	assert.Equal(t, "101111110000000000000000", buffer.Seek(1).WriteBit(0).SeekTail().ToBinaryString())
 }
 
-func TestBitBuffer_SeekFirst(t *testing.T) {
+func TestBitBuffer_SeekHead(t *testing.T) {
 	buffer := New().WriteByte(0xFF)
 	assert.Equal(t, "11111111", buffer.ToBinaryString())
-	assert.Equal(t, "", buffer.SeekFirst().ToBinaryString())
+	assert.Equal(t, "", buffer.SeekHead().ToBinaryString())
 	assert.Equal(t, "1", buffer.WriteBit(0x1).ToBinaryString())
 }
 
-func TestBitBuffer_SeekLast(t *testing.T) {
+func TestBitBuffer_SeekTail(t *testing.T) {
 	buffer := New().WriteByte(0xFF)
 	assert.Equal(t, "11111111", buffer.ToBinaryString())
-	assert.Equal(t, "11111111", buffer.SeekLast().ToBinaryString())
+	assert.Equal(t, "11111111", buffer.SeekTail().ToBinaryString())
 	assert.Equal(t, "111111111", buffer.WriteBit(0x1).ToBinaryString())
 }
 
 func TestBitBuffer_ReadBit(t *testing.T) {
-	buffer := New().WriteByte(0xF0).SeekFirst()
+	buffer := New().WriteByte(0xF0).SeekHead()
 
 	assert.Equal(t, 1, buffer.ReadBit())
-	assert.False(t, buffer.IsAtLast())
+	assert.False(t, buffer.IsTail())
 
 	assert.Equal(t, 1, buffer.ReadBit())
-	assert.False(t, buffer.IsAtLast())
+	assert.False(t, buffer.IsTail())
 
 	assert.Equal(t, 1, buffer.ReadBit())
-	assert.False(t, buffer.IsAtLast())
+	assert.False(t, buffer.IsTail())
 
 	assert.Equal(t, 1, buffer.ReadBit())
-	assert.False(t, buffer.IsAtLast())
+	assert.False(t, buffer.IsTail())
 
 	assert.Equal(t, 0, buffer.ReadBit())
-	assert.False(t, buffer.IsAtLast())
+	assert.False(t, buffer.IsTail())
 
 	assert.Equal(t, 0, buffer.ReadBit())
-	assert.False(t, buffer.IsAtLast())
+	assert.False(t, buffer.IsTail())
 
 	assert.Equal(t, 0, buffer.ReadBit())
-	assert.False(t, buffer.IsAtLast())
+	assert.False(t, buffer.IsTail())
 
 	assert.Equal(t, 0, buffer.ReadBit())
-	assert.True(t, buffer.IsAtLast())
+	assert.True(t, buffer.IsTail())
 }
