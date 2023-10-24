@@ -49,6 +49,14 @@ func (x *BitBuffer) Append(bitValue int) *BitBuffer {
 	return x
 }
 
+// AppendByte 往缓存空间一次追加一个byte
+func (x *BitBuffer) AppendByte(b byte) *BitBuffer {
+	for offset := BitBeginOffset; offset >= 0; offset-- {
+		x.Append((int(b) >> offset) & 0x1)
+	}
+	return x
+}
+
 // Bytes 返回当前缓存空间所对应的字节数组
 func (x *BitBuffer) Bytes() []byte {
 	return x.buffer
