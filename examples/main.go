@@ -8,7 +8,7 @@ import (
 func main() {
 
 	// 创建一块缓存空间，可以一个bit一个bit的往里面写
-	buffer := bit_buffer.New().Append(1).Append(0)
+	buffer := bit_buffer.New().WriteBit(1).WriteBit(0)
 
 	// 转为二进制字符串
 	binaryString := buffer.ToBinaryString()
